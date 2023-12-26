@@ -1,5 +1,7 @@
 package com.tutorial.starter;
 
+import com.tutorial.starter.cache.CacheInitializer;
+import com.tutorial.starter.cache.aerospike.AerospikeCacheInitializer;
 import com.tutorial.starter.resources.PaymentCollectionResource;
 import com.tutorial.starter.resources.PaymentResource;
 import io.dropwizard.core.Application;
@@ -20,9 +22,12 @@ public class StarterApplication extends Application<StarterConfiguration> {
     }
 
     @Override
-    public void run(StarterConfiguration starterConfiguration, Environment environment) throws Exception {
+    public void run(StarterConfiguration starterConfiguration, Environment environment) {
+        logger.debug("Inside run function of application.");
         final JdbiFactory factory = new JdbiFactory();
         final Jdbi jdbi = factory.build(environment, starterConfiguration.getDataSourceFactory(), "mariadb:demo1");
+        CacheInitializer cacheInitializer = new AerospikeCacheInitializer();
+        cacheInitializer.initCache(jdbi);
         environment.jersey().register(new PaymentCollectionResource(jdbi));
         environment.jersey().register(new PaymentResource(jdbi));
     }
