@@ -9,7 +9,7 @@ database:
   password: root
 
   # the JDBC URL
-  url: jdbc:mariadb://localhost:3306/DB
+  url: jdbc:mariadb://localhost:3306/mysql
 
   # any properties specific to your JDBC driver:
   properties:
@@ -38,3 +38,9 @@ database:
 
   # the minimum amount of time an connection must sit idle in the pool before it is eligible for eviction
   minIdleTime: 1 minute
+
+logging:
+  appenders:
+    - type: console
+      threshold: TRACE
+      target: stderr

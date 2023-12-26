@@ -34,7 +34,7 @@ public class PaymentCollectionResource {
         Long finalMinAmount = minAmount;
         Long finalMaxAmount = maxAmount;
         if (sender == null && receiver == null) {
-            return Response.ok(jdbi.withExtension(PaymentDao.class, dao -> dao.listPayments(finalMinAmount, finalMaxAmount))).build();
+            return Response.ok(jdbi.withExtension(PaymentDao.class, dao -> dao.getPayments(finalMinAmount, finalMaxAmount))).build();
         } else  if (sender == null) {
             return Response.ok(jdbi.withExtension(PaymentDao.class, dao -> dao.getPaymentToUser(receiver, finalMinAmount, finalMaxAmount))).build();
         } else if (receiver == null) {
